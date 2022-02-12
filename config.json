@@ -1,0 +1,16 @@
+{
+  "bot": {
+    "mainColor": "#FFFFFF",
+    "errorWebhook": "WEBHOOK_URL",
+    "token": "TOKEN",
+    "defaultContact": "Wailrone™#0666",
+    "ownersIDs": [
+      "393378313663676427"
+    ]
+  },
+  "emotes": {
+    "SUCCESS": "🟢",
+    "ERROR": "🔴",
+    "WARNING": "⚠"
+  }
+}
