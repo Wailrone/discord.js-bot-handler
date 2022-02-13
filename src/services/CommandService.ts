@@ -8,7 +8,7 @@ import {
     Permissions,
     ThreadChannel,
     WebhookClient,
-    WebhookClientData, WebhookClientDataURL
+    WebhookClientData
 } from "discord.js";
 import Context from "../utils/Context";
 import {Emotes} from "../utils/Constants";

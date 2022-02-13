@@ -3,9 +3,8 @@
 
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
-import {BaseClient, Client} from "discord.js";
 
-export default class extends Command{
+export default class extends Command {
     constructor() {
         super({
             name: "userinfos",

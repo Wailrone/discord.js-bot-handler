@@ -1,5 +1,5 @@
 "use strict";
-import {ColorResolvable, Message, WebhookClientData, WebhookClientDataURL} from "discord.js";
+import {ColorResolvable, Message, WebhookClientDataURL} from "discord.js";
 import config from "../../config.json";
 
 export interface ConfigFile {
