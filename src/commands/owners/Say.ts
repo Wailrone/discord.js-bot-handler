@@ -1,6 +1,5 @@
 "use strict";
 
-// @ts-ignore
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
 import {Emotes} from "../../utils/Constants";

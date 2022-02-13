@@ -3,8 +3,9 @@
 
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
+import {BaseClient, Client} from "discord.js";
 
-export default class extends Command {
+export default class extends Command{
     constructor() {
         super({
             name: "userinfos",
@@ -28,8 +29,7 @@ export default class extends Command {
             embeds: [
                 {
                     title: `Profil de ${targetUser.tag}`,
-                    // @ts-ignore
-                    color: (await ctx.client.api.users(targetUser.id)?.get())?.accent_color || ctx.client.config.informationsConfig.mainColor,
+                    color: (await targetUser.fetch())?.accentColor || ctx.client.config.bot.mainColor,
                     description: `<@${targetUser.id}>`,
                     thumbnail: {
                         url: targetAvatarURL || targetUser.defaultAvatarURL,

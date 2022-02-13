@@ -1,11 +1,11 @@
 "use strict";
-import {ColorResolvable, Message, WebhookClientData} from "discord.js";
+import {ColorResolvable, Message, WebhookClientData, WebhookClientDataURL} from "discord.js";
 import config from "../../config.json";
 
 export interface ConfigFile {
     "bot": {
         "mainColor": ColorResolvable,
-        "errorWebhook": WebhookClientData,
+        "errorWebhook": WebhookClientDataURL | string,
         "defaultContact": string,
         "token": string,
         "ownersIDs": string[]

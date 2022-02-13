@@ -1,5 +1,5 @@
 import Bot from '../../main'
-import {MessageComponentInteraction, WebhookClient} from "discord.js";
+import {MessageComponentInteraction, WebhookClient, WebhookClientData} from "discord.js";
 import Context from "../utils/Context";
 import {Emotes} from "../utils/Constants";
 
@@ -10,7 +10,7 @@ export default class ComponentService {
     constructor(client: typeof Bot) {
         this.client = client;
         try {
-            this._errorWebhook = new WebhookClient(client.config.bot.errorWebhook);
+            this._errorWebhook = new WebhookClient(<WebhookClientData>client.config.bot.errorWebhook);
         } catch (e) {
         }
     }

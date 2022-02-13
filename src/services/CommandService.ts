@@ -1,7 +1,15 @@
 "use strict";
 
 import type Client from "../../main";
-import {CommandInteraction, DMChannel, GuildChannel, Permissions, ThreadChannel, WebhookClient} from "discord.js";
+import {
+    CommandInteraction,
+    DMChannel,
+    GuildChannel,
+    Permissions,
+    ThreadChannel,
+    WebhookClient,
+    WebhookClientData, WebhookClientDataURL
+} from "discord.js";
 import Context from "../utils/Context";
 import {Emotes} from "../utils/Constants";
 
@@ -12,7 +20,7 @@ class CommandService {
     constructor(client: typeof Client) {
         this.client = client;
         try {
-            this._errorWebhook = new WebhookClient(client.config.bot.errorWebhook);
+            this._errorWebhook = new WebhookClient(<WebhookClientData>client.config.bot.errorWebhook);
         } catch (e) {
         }
     }

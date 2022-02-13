@@ -48,7 +48,7 @@ class Bot extends Client {
                 }
             }),
         });
-        this.config = config as unknown as ConfigFile;
+        this.config = config as ConfigFile;
         this.logger = new Logger(`Shard #${this.shard?.ids?.toString() ?? "0"}`);
         this.events = new EventsManager(this);
         this.userCooldown = new Map();
