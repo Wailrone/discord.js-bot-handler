@@ -30,7 +30,7 @@ class Context {
         this.interaction = interaction;
         this.client = client;
         this.args = interaction instanceof CommandInteraction ? interaction.options : null
-        this.customIdParams = interaction instanceof MessageComponentInteraction ? customIdParams.reduce((sum, key, index) => Object.assign(sum, {[key]: interaction.customId.split(":")[index]}), {}) : null;
+        this.customIdParams = interaction instanceof MessageComponentInteraction ? customIdParams.reduce((sum, key, index) => Object.assign(sum, {[key]: interaction.customId.split(":").slice(1)[index]}), {}) : null;
     }
 
     get customId() {

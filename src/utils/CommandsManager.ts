@@ -74,7 +74,7 @@ class CommandsManager {
 
 
         if (this._globalCommands.cache.some(cmd =>
-            (this._commands.get(cmd.name)?.description || "") !== cmd?.description &&
+            (this._commands.get(cmd.name)?.description || "") !== cmd?.description ||
             (this._commands.get(cmd.name)?.options || []) !== cmd?.options
         ) || this._globalCommands.cache.size !== this._commands.size) {
             await this._globalCommands.set(this._commands.map((cmd) => {
