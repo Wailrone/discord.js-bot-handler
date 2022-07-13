@@ -5,6 +5,7 @@ import type Client from "../../main";
 import CommandService from "../services/CommandService";
 import DiscordEvent from "../utils/DiscordEvent";
 import ComponentService from "../services/ComponentService";
+import {CommandInteraction, MessageComponentInteraction} from "discord.js";
 
 class InteractionCreate extends DiscordEvent {
     commands: CommandService;
@@ -18,8 +19,8 @@ class InteractionCreate extends DiscordEvent {
     }
 
     async run(interaction: Interaction) {
-        if (interaction.isCommand()) await this.commands.handle(interaction);
-        if (interaction.isMessageComponent()) await this.components.handle(interaction)
+        if (interaction instanceof CommandInteraction) await this.commands.handle(interaction);
+        if (interaction instanceof MessageComponentInteraction) await this.components.handle(interaction)
     }
 }
 

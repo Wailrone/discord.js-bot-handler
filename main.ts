@@ -1,11 +1,11 @@
 "use strict";
 
-import {Client, Intents, LimitedCollection, Options,} from "discord.js";
+import {Client, IntentsBitField, LimitedCollection, Options, Partials,} from "discord.js";
 import {ConfigFile} from "./src/utils/Constants"
 import CommandsManager from "./src/utils/CommandsManager";
 import EventsManager from "./src/utils/EventsManager.js";
 import Logger from "./src/utils/Logger";
-import * as config from "./config.json";
+import * as config from "./configuration.json";
 import ComponentsManager from "./src/utils/ComponentsManager";
 
 class Bot extends Client {
@@ -18,35 +18,38 @@ class Bot extends Client {
 
     constructor() {
         super({
-            restTimeOffset: 0,
+            rest: {
+                offset : 0,
+            },
             intents: [
-                Intents.FLAGS.GUILDS,
-                Intents.FLAGS.GUILD_MESSAGES,
-                Intents.FLAGS.GUILD_MEMBERS,
-                Intents.FLAGS.GUILD_BANS,
-                Intents.FLAGS.GUILD_PRESENCES,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-                Intents.FLAGS.GUILD_INTEGRATIONS,
-                Intents.FLAGS.DIRECT_MESSAGES,
-                Intents.FLAGS.DIRECT_MESSAGE_TYPING,
-                Intents.FLAGS.GUILD_MESSAGE_TYPING],
-            partials: ["CHANNEL"],
-            makeCache: Options.cacheWithLimits({
-                MessageManager: {
-                    sweepInterval: 300,
-                    sweepFilter: LimitedCollection.filterByLifetime({
-                        lifetime: 900,
-                        getComparisonTimestamp: e => e?.editedTimestamp ?? e?.createdTimestamp,
-                    })
+                IntentsBitField.Flags.GuildMessages,
+                IntentsBitField.Flags.GuildMembers,
+                IntentsBitField.Flags.GuildBans,
+                IntentsBitField.Flags.GuildMessageReactions,
+                IntentsBitField.Flags.GuildIntegrations,
+                IntentsBitField.Flags.GuildWebhooks,
+                IntentsBitField.Flags.GuildEmojisAndStickers,
+                IntentsBitField.Flags.GuildVoiceStates,
+                IntentsBitField.Flags.DirectMessages,
+                IntentsBitField.Flags.DirectMessageReactions,
+                IntentsBitField.Flags.DirectMessageTyping,
+                IntentsBitField.Flags.GuildScheduledEvents,
+                IntentsBitField.Flags.GuildPresences,
+                IntentsBitField.Flags.GuildMessageTyping,
+            ],
+            partials: [
+                Partials.Channel,
+            ],
+            sweepers: {
+                messages : {
+                    interval : 300,
+                    lifetime : 900,
                 },
-                ThreadManager: {
-                    sweepInterval: 3600,
-                    sweepFilter: LimitedCollection.filterByLifetime({
-                        getComparisonTimestamp: e => e.archiveTimestamp,
-                        excludeFromSweep: e => !e.archived,
-                    }),
+                threads : {
+                    interval : 3600,
+                    lifetime : 900,
                 }
-            }),
+            }
         });
         this.config = config as ConfigFile;
         this.logger = new Logger(`Shard #${this.shard?.ids?.toString() ?? "0"}`);

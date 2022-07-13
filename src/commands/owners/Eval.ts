@@ -3,6 +3,7 @@
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
 import {Emotes} from "../../utils/Constants";
+import {ApplicationCommandOptionType, PermissionsBitField} from "discord.js";
 
 export default class extends Command {
     constructor() {
@@ -10,10 +11,10 @@ export default class extends Command {
             name: "eval",
             category: "owners",
             description: "Eval a code.",
-            botPerms: ["ADMINISTRATOR"],
+            botPerms: [PermissionsBitField.Flags.Administrator],
             ownerOnly: true,
             options: [{
-                type: 'STRING',
+                type: ApplicationCommandOptionType.String,
                 name: 'code',
                 required: true,
                 description: 'Code to execute.'

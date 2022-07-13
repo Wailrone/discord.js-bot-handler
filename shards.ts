@@ -2,7 +2,7 @@
 
 import {ShardingManager} from "discord.js";
 import Logger from "./src/utils/Logger";
-import {bot} from "./config.json";
+import {bot} from "./configuration.json";
 import {resolve} from "path";
 
 const shardManagerLogger: Logger = new Logger("ShardingManager");

@@ -3,6 +3,7 @@
 
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
+import {ApplicationCommandOptionType} from "discord.js";
 
 export default class extends Command {
     constructor() {
@@ -11,7 +12,7 @@ export default class extends Command {
             description: "Gives information about a user.",
             category: "utils",
             options: [{
-                type: "USER",
+                type: ApplicationCommandOptionType.User,
                 name: "user",
                 description: "User to get information about.",
                 required: true,
@@ -21,7 +22,7 @@ export default class extends Command {
 
     async run(ctx: Context) {
         const targetUser = ctx.targetUser || ctx.args.getUser('user');
-        const targetAvatarURL = targetUser.avatarURL({format: 'png'})
+        const targetAvatarURL = targetUser.avatarURL({extension: 'png'})
 
         await ctx.reply({
             ephemeral: !!ctx.targetUser,

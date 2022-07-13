@@ -3,6 +3,7 @@
 import Command from "../../utils/Command";
 import Context from "../../utils/Context";
 import {Emotes} from "../../utils/Constants";
+import {ApplicationCommandOptionType} from "discord.js";
 
 export default class extends Command {
     constructor() {
@@ -12,7 +13,7 @@ export default class extends Command {
             description: "Permet de faire parler le bot.",
             ownerOnly: true,
             options: [{
-                type: 'STRING',
+                type: ApplicationCommandOptionType.String,
                 name: 'text',
                 required: true,
                 description: 'Texte.'

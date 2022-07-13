@@ -1,6 +1,7 @@
 "use strict";
 
-import type {ApplicationCommandOptionData, ApplicationCommandType, PermissionResolvable} from "discord.js";
+import type {ApplicationCommandOptionData, PermissionResolvable} from "discord.js";
+import {ApplicationCommandType} from "discord.js";
 import type Context from "./Context";
 
 interface CommandInfo {
@@ -47,7 +48,7 @@ export default abstract class Command {
         this.ownerOnly = info.ownerOnly || false;
         this.staffOnly = info.staffOnly || false;
         this.cooldown = info.cooldown || 3000;
-        this.type = info.type || "CHAT_INPUT";
+        this.type = info.type || ApplicationCommandType.ChatInput;
         this.isAvailableInDM = info.isAvailableInDM || false;
     }
 

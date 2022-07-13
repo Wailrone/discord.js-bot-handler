@@ -5,7 +5,7 @@ import {
     CommandInteractionOptionResolver,
     Guild,
     GuildChannel,
-    GuildMember,
+    GuildMember, GuildTextBasedChannel,
     InteractionDeferReplyOptions,
     InteractionReplyOptions,
     MessageComponentInteraction,
@@ -14,8 +14,7 @@ import {
     ShardClientUtil,
     TextChannel,
     ThreadChannel,
-    User,
-    UserContextMenuInteraction,
+    User, UserContextMenuCommandInteraction,
     WebhookEditMessageOptions
 } from "discord.js";
 import Client from "../../main";
@@ -23,13 +22,13 @@ import Client from "../../main";
 class Context {
     interaction: CommandInteraction | MessageComponentInteraction;
     client: typeof Client;
-    args: Omit<CommandInteractionOptionResolver, "getMessage" | "getFocused">
+    args: CommandInteractionOptionResolver;
     customIdParams: { [p: string]: string };
 
     constructor(client: typeof Client, interaction: CommandInteraction | MessageComponentInteraction, customIdParams?: string[]) {
         this.interaction = interaction;
         this.client = client;
-        this.args = interaction instanceof CommandInteraction ? interaction.options : null
+        this.args = (interaction instanceof CommandInteraction ? interaction.options : null) as CommandInteractionOptionResolver;
         this.customIdParams = interaction instanceof MessageComponentInteraction ? customIdParams.reduce((sum, key, index) => Object.assign(sum, {[key]: interaction.customId.split(":").slice(1)[index]}), {}) : null;
     }
 
@@ -49,10 +48,9 @@ class Context {
         return this.interaction.guild;
     }
 
-    get channel(): TextChannel | NewsChannel | ThreadChannel {
+    get channel(): GuildTextBasedChannel {
         if (!this.interaction.channel || !this.interaction.guild) throw new Error("Not a guild channel");
-        if (!(this.interaction.channel instanceof GuildChannel) &&
-            !(this.interaction.channel instanceof ThreadChannel)) throw new Error("This is not a GuildTextChannel");
+        if (!(this.interaction.channel instanceof GuildChannel) && !(this.interaction.channel instanceof ThreadChannel)) throw new Error("This is not a GuildTextChannel");
         return this.interaction.channel;
     }
 
@@ -61,7 +59,7 @@ class Context {
     }
 
     get targetUser(): User {
-        if (this.interaction instanceof UserContextMenuInteraction) return this.interaction.targetUser;
+        if (this.interaction instanceof UserContextMenuCommandInteraction) return this.interaction.targetUser;
     }
 
     get member(): GuildMember | any {
@@ -69,7 +67,7 @@ class Context {
     }
 
     get me(): GuildMember {
-        return this.guild.me;
+        return this.guild.members.me;
     }
 
     reply(content: string | MessagePayload | InteractionReplyOptions) {

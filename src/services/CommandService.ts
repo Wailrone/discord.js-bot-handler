@@ -5,7 +5,7 @@ import {
     CommandInteraction,
     DMChannel,
     GuildChannel,
-    Permissions,
+    Permissions, PermissionsBitField,
     ThreadChannel,
     WebhookClient,
     WebhookClientData
@@ -61,15 +61,11 @@ class CommandService {
         }
 
         if (interaction.channel instanceof GuildChannel || interaction.channel instanceof ThreadChannel) {
-            const channelBotPerms = new Permissions(interaction.channel?.permissionsFor(interaction.guild.me));
+            const channelBotPerms = new PermissionsBitField(interaction.channel?.permissionsFor(interaction.guild.members.me));
 
-            if (!interaction.guild.members.cache.get(interaction.user.id).permissions.has(command.userPerms)) {
-                return interaction.reply(`${Emotes.ERROR} **Vous devez avoir les permissions suivantes : \`${command.userPerms}\` pour utiliser cette commande.**`);
-            }
+            if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.EmbedLinks) || !channelBotPerms.has(PermissionsBitField.Flags.EmbedLinks)) return interaction.reply(`${Emotes.ERROR} **Le bot doit avoir la permission \`EMBED_LINKS\` pour fonctionner correctement !**`);
 
-            if (!interaction.guild.me.permissions.has("EMBED_LINKS") || !channelBotPerms.has("EMBED_LINKS")) return interaction.reply(`${Emotes.ERROR} **Le bot doit avoir la permission \`EMBED_LINKS\` pour fonctionner correctement !**`);
-
-            if (!interaction.guild.me.permissions.has(command.botPerms) || !channelBotPerms.has(command.botPerms)) {
+            if (!interaction.guild.members.me.permissions.has(command.botPerms) || !channelBotPerms.has(command.botPerms)) {
                 return interaction.reply(`${Emotes.ERROR} **Le bot doit avoir les permissions suivantes : \`${command.botPerms}\` pour exécuter cette commande.**`);
             }
         }

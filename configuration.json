@@ -1,6 +1,6 @@
 {
   "bot": {
-    "mainColor": "#FFFFFF",
+    "mainColor": 16777215,
     "errorWebhook": "WEBHOOK_URL",
     "token": "TOKEN",
     "defaultContact": "Wailrone™#0666",

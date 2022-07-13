@@ -4,7 +4,7 @@
 
 import Client from "../../main";
 import {resolve} from "path";
-import {ApplicationCommandManager, Collection} from "discord.js";
+import {ApplicationCommandManager, Collection, ApplicationCommandType} from "discord.js";
 import {access, readdir, stat} from "fs/promises";
 import Command from "./Command";
 
@@ -78,15 +78,17 @@ class CommandsManager {
             (this._commands.get(cmd.name)?.options || []) !== cmd?.options
         ) || this._globalCommands.cache.size !== this._commands.size) {
             await this._globalCommands.set(this._commands.map((cmd) => {
-                if (cmd.type !== "CHAT_INPUT") return {
+                if (cmd.type !== ApplicationCommandType.ChatInput) return {
                     name: cmd.name,
-                    type: cmd.type
+                    type: cmd.type,
+                    defaultMemberPermissions : cmd.userPerms,
                 }
                 else return {
                     name: cmd.name,
                     type: cmd.type,
                     description: cmd.description,
                     options: cmd.options,
+                    defaultMemberPermissions : cmd.userPerms,
                 }
             }));
             console.info("[Commands] Refresh the globals commands");
